@@ -10,11 +10,15 @@ namespace Practicum1
 {
     class Paddle : Object
     {
+        int lives;
+        Texture2D livesSprite;
+        
         public Paddle(Texture2D sprite, Vector2 position)
             : base(sprite, position)
         {
             this.position = position;
             this.sprite = sprite;
+            lives = 3;
         }
         public void checkMaxRange()
         {
@@ -32,11 +36,23 @@ namespace Practicum1
                 position.Y = Practicum1.Screen.Y - sprite.Height;
             }
         }
-        //key1 == up key2 == down
-        //void Update(GameTime gameTime)
-        // {
-        // base.Update(gameTime);
-        // }
+        
+        
+        public void drawlevens(int posX)
+        {
+            // draw lives
+            for (int i = 0; lives > i; i++)
+            {
+                spriteBatch.Draw(livesSprite, new Vector2(i * livesSprite.Width + posX, 0), Color.White);
+            }
+        }
+ 
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            base.Draw(gameTime, spriteBatch);
+        }
+ 
+ 
         public void Move(Keys key1, Keys key2, float newVelocity)
         {
             KeyboardState keyState = Keyboard.GetState();
@@ -52,6 +68,12 @@ namespace Practicum1
             {
                 velocity.Y = 0;
             }
+        }
+        
+        public int Lives
+        {
+            get { return lives; }
+            set { lives = value; }
         }
     }
 }
