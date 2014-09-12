@@ -19,6 +19,7 @@ namespace Practicum1
         SpriteBatch spriteBatch;
         Ball ball;
         Paddle player1, player2;
+        List<Paddle> paddleList = new List<Paddle>();
         protected static Point screen;
         static SpriteFont gameFont;
         public Practicum1()
@@ -30,10 +31,12 @@ namespace Practicum1
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             screen = new Point(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            ball = new Ball(Content.Load<Texture2D>("bal"), new Vector2(320, 240), 150);
-            player1 = new Paddle(Content.Load<Texture2D>("rodeSpeler"), new Vector2(0, 300));
-            player2 = new Paddle(Content.Load<Texture2D>("blauweSpeler"), new Vector2(Practicum1.Screen.X - 15, 300));
+            player1 = new Paddle(Content.Load<Texture2D>("rodeSpeler"), new Vector2(0, 300),"Player 1");
+            player2 = new Paddle(Content.Load<Texture2D>("blauweSpeler"), new Vector2(Practicum1.Screen.X - 15, 300), "Player 2");
             gameFont = Content.Load<SpriteFont>("GameFont");
+            paddleList.Add(player1);
+            paddleList.Add(player2);
+            ball = new Ball(Content.Load<Texture2D>("bal"), new Vector2(320, 240), 200, paddleList);
         }
         protected override void UnloadContent()
         {

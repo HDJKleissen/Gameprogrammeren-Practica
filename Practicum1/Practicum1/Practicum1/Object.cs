@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 namespace Practicum1
 {
-    class Object
+    public class Object
     {
         public Texture2D sprite;
         public Vector2 position, velocity;
@@ -23,6 +23,11 @@ namespace Practicum1
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite, position, Color.White);
+        }
+
+        public Rectangle BoundingBox
+        {
+            get { return new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height); }
         }
     }
 }

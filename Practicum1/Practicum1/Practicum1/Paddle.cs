@@ -10,11 +10,13 @@ namespace Practicum1
 {
     class Paddle : Object
     {
-        public Paddle(Texture2D sprite, Vector2 position)
+        public String name;
+        public Paddle(Texture2D sprite, Vector2 position, String name)
             : base(sprite, position)
         {
             this.position = position;
             this.sprite = sprite;
+            this.name = name;
         }
         public void checkMaxRange()
         {
