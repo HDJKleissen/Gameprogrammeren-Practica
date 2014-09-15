@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Practicum1.states;
+
 namespace Practicum1
 {
     /// <summary>
@@ -23,7 +25,7 @@ namespace Practicum1
 
         protected static Point screen;
         protected static SpriteFont gameFont;
-         static GameStateManager gameStateManager;
+        protected static GameStateManager gameStateManager;
 
         public Practicum1()
         {
@@ -37,12 +39,15 @@ namespace Practicum1
             spriteBatch = new SpriteBatch(GraphicsDevice);
             screen = new Point(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
-            player1 = new Paddle(Content.Load<Texture2D>("rodeSpeler"), Content.Load<Texture2D>("balRood"), new Vector2(0, 300), "Player 1");
+            /*player1 = new Paddle(Content.Load<Texture2D>("rodeSpeler"), Content.Load<Texture2D>("balRood"), new Vector2(0, 300), "Player 1");
             player2 = new Paddle(Content.Load<Texture2D>("blauweSpeler"), Content.Load<Texture2D>("balBlauw"), new Vector2(Practicum1.Screen.X - 15, 300), "Player 2");
             gameFont = Content.Load<SpriteFont>("GameFont");
             paddleList.Add(player1);
             paddleList.Add(player2);
             ball = new Ball(Content.Load<Texture2D>("bal"), new Vector2(Practicum1.Screen.X / 2, Practicum1.Screen.Y / 2), 275, paddleList, "Ball");
+            */
+            gameStateManager.AddGameState("mainMenu", new MainMenuState());
+            gameStateManager.SwitchTo("mainMenu");
         }
         
         protected override void Update(GameTime gameTime)

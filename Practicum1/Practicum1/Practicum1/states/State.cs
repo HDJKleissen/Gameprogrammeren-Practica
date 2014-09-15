@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Practicum1.states
 {
-    class State
+    class State : IGameLoopObject
     {
         protected List<Object> gameObjects;
         public State()
@@ -53,6 +53,11 @@ namespace Practicum1.states
             List<Object>.Enumerator e = gameObjects.GetEnumerator();
             while (e.MoveNext())
                 e.Current.Draw(gameTime, spriteBatch);
+        }
+
+        public void HandleInput()
+        {
+
         }
 
         public void Reset()

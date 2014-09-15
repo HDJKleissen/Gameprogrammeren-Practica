@@ -27,7 +27,10 @@ namespace Practicum1
         }
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, position, Color.White);
+            if (sprite != null)
+            {
+                spriteBatch.Draw(sprite, position, Color.White);
+            }
         }
 
         public Rectangle BoundingBox
