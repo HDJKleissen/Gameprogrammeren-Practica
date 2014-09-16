@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Practicum1.states
 {
-    class GameOverState
+    class GameOverState : State
     {
     }
 }

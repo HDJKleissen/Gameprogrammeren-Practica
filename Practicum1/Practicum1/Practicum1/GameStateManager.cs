@@ -4,25 +4,27 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Practicum1.states;
+
 namespace Practicum1
 {
-    public class GameStateManager : IGameLoopObject
+    public class GameStateManager
     {
-        protected Dictionary<string, IGameLoopObject> gameStates;
-        protected IGameLoopObject currentGameState;
+        protected Dictionary<string, State> gameStates;
+        protected State currentGameState;
 
         public GameStateManager()
         {
-            gameStates = new Dictionary<string, IGameLoopObject>();
+            gameStates = new Dictionary<string, State>();
             currentGameState = null;
         }
 
-        public void AddGameState(string name, IGameLoopObject state)
+        public void AddGameState(string name, State state)
         {
             gameStates[name] = state;
         }
 
-        public IGameLoopObject getGameState(string name)
+        public State getGameState(string name)
         {
             return gameStates[name];
         }
@@ -30,7 +32,11 @@ namespace Practicum1
         public void SwitchTo(string name)
         {
             if (gameStates.ContainsKey(name))
+            {
                 currentGameState = gameStates[name];
+                Console.WriteLine("Switched gamestate to " + currentGameState);
+            }
+              
         }
 
         public void Update(GameTime gameTime)
@@ -45,14 +51,10 @@ namespace Practicum1
                 currentGameState.Draw(gameTime, spriteBatch);
         }
 
-        public void HandleInput()
+        public void HandleInput(InputHelper inputHelper)
         {
-
-        }   
-
-        public void Reset()
-        {
-            
+            if (currentGameState != null)
+                currentGameState.HandleInput(inputHelper);
         }
     }
 }

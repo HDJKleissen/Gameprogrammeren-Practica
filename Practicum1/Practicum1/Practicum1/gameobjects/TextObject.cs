@@ -10,16 +10,15 @@ namespace Practicum1.gameobjects
     class TextObject : Object
     {
         protected string text;
-        protected bool visible;
         protected Color color;
-        public SpriteFont spriteFont = Practicum1.GameFont;
+        public SpriteFont spriteFont;
         
         public TextObject(string text, Vector2 position, Color color, Texture2D sprite, string name) : base(sprite, position, name)
         {
             this.text = text;
             this.position = position;
             this.color = color;
-            visible = true;
+            spriteFont = Practicum1.GameFont;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -38,12 +37,6 @@ namespace Practicum1.gameobjects
         {
             get { return text; }
             set { text = value; }
-        }
-
-        public Vector2 Position
-        {
-            get { return position; }
-            set { position = value; }
         }
 
         public Vector2 Size

@@ -4,7 +4,7 @@ namespace Practicum1
 {
     public interface IGameLoopObject
     {
-        void HandleInput();
+        void HandleInput(InputHelper inputHelper);
 
         void Update(GameTime gameTime);
 

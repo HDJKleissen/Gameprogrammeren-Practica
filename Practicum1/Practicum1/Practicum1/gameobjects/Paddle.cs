@@ -12,12 +12,18 @@ namespace Practicum1
     {
         int lives;
         Texture2D livesSprite;
-        public Paddle(Texture2D sprite, Texture2D livesSprite, Vector2 position, String name)
+        Keys key1, key2;
+        float newVelocity;
+
+        public Paddle(Texture2D sprite, Texture2D livesSprite, Vector2 position, float newVelocity, Keys key1, Keys key2, String name)
             : base(sprite, position, name)
         {
             this.position = position;
             this.sprite = sprite;
             this.livesSprite = livesSprite;
+            this.key1 = key1;
+            this.key2 = key2;
+            this.newVelocity = newVelocity;
             lives = 3;
         }
         public void checkMaxRange()
@@ -54,12 +60,16 @@ namespace Practicum1
         }
         public void Move(Keys key1, Keys key2, float newVelocity)
         {
-            KeyboardState keyState = Keyboard.GetState();
-            if (keyState.IsKeyDown(key1))
+            
+        }
+
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            if (inputHelper.IsKeyDown(key1))
             {
                 velocity.Y = -newVelocity;
             }
-            else if (keyState.IsKeyDown(key2))
+            else if (inputHelper.IsKeyDown(key2))
             {
                 velocity.Y = newVelocity;
             }
@@ -68,7 +78,6 @@ namespace Practicum1
                 velocity.Y = 0;
             }
         }
-
         public int Lives
         {
             get { return lives; }

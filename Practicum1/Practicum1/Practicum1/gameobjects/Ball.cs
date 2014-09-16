@@ -40,7 +40,7 @@ namespace Practicum1
 
             if (position.X < 0 - sprite.Width)
                 foreach (Paddle paddle in paddleList)
-                    if (paddle.name.Equals("Player 1"))
+                    if (paddle.Name.Equals("Player 1"))
                     {
                         paddle.Lives = paddle.Lives - 1;
                         Reset(paddle);
@@ -49,12 +49,12 @@ namespace Practicum1
 
             if (position.X > Practicum1.Screen.X)
                 foreach (Paddle paddle in paddleList)
-                    if (paddle.name.Equals("Player 2"))
+                    if (paddle.Name.Equals("Player 2"))
                     {
                         paddle.Lives = paddle.Lives - 1;
                         Reset(paddle);
                     }
-
+            
             base.Update(gameTime);
         }
 
@@ -64,7 +64,7 @@ namespace Practicum1
             int i = 0;
             foreach(Paddle paddle in paddleList)
             {
-                spriteBatch.DrawString(Practicum1.GameFont, "" + paddle.name + "  " + paddle.BoundingBox + "  " + CheckCollision(paddle), new Vector2(50, 0+i*20), Color.Black);
+                spriteBatch.DrawString(Practicum1.GameFont, "" + paddle.Name + "  " + paddle.BoundingBox + "  " + CheckCollision(paddle), new Vector2(50, 0+i*20), Color.Black);
                 i++;
             }
             spriteBatch.DrawString(Practicum1.GameFont, "velocity: " + velocity, new Vector2(100, 60), Color.Black);
@@ -85,18 +85,18 @@ namespace Practicum1
             direction = 2 * Math.PI - direction;
         }
 
-        public void Bounce(Paddle paddle)
+        public void Bounce(Object paddle)
         {
-            if(paddle.name.Equals("Player 1"))
+            if(paddle.Name.Equals("Player 1"))
             {
-                float relativeIntersectY = (paddle.position.Y + (paddle.sprite.Height / 2) - position.Y);
-                float normalizedIntersectY = (relativeIntersectY / (paddle.sprite.Height / 2));
+                float relativeIntersectY = (paddle.Position.Y + (paddle.Sprite.Height / 2) - position.Y);
+                float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height / 2));
                 direction = normalizedIntersectY * (-1 * Math.PI / 3);
             }
-            else if(paddle.name.Equals("Player 2"))
+            else if(paddle.Name.Equals("Player 2"))
             {
-                float relativeIntersectY = (paddle.position.Y + (paddle.sprite.Height / 2) - position.Y);
-                float normalizedIntersectY = (relativeIntersectY / (paddle.sprite.Height / 2));
+                float relativeIntersectY = (paddle.Position.Y + (paddle.Sprite.Height / 2) - position.Y);
+                float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height / 2));
                 direction = Math.PI - normalizedIntersectY * (-1 * Math.PI / 3);
             }
             speed *= 1.05;
@@ -105,12 +105,12 @@ namespace Practicum1
         public void Reset(Paddle paddle)
         {
             position = new Vector2(Practicum1.Screen.X / 2, Practicum1.Screen.Y / 2);
-
-            if (paddle.name.Equals("Player 1"))
+            
+            if (paddle.Name.Equals("Player 1"))
                 direction = 0.75 * Math.PI + random.NextDouble() * 0.5 * Math.PI;
-            else if (paddle.name.Equals("Player 2"))
+            else if (paddle.Name.Equals("Player 2"))
                 direction = 0.25 * Math.PI - random.NextDouble() * 0.5 * Math.PI;
-
+            
             speed = startSpeed;
         }
     }

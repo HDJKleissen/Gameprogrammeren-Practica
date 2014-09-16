@@ -9,15 +9,16 @@ namespace Practicum1
 {
     public class Object : IGameLoopObject
     {
-        public Texture2D sprite;
-        public Vector2 position, velocity;
-        public string name;
-
+        protected Texture2D sprite;
+        protected Vector2 position, velocity;
+        protected string name;
+        protected bool visible;
         public Object(Texture2D sprite, Vector2 position, string name)
         {
             this.sprite = sprite;
             this.position = position;
             this.name = name;
+            this.visible = true;
         }
 
 
@@ -27,7 +28,7 @@ namespace Practicum1
         }
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (sprite != null)
+            if (sprite != null && visible)
             {
                 spriteBatch.Draw(sprite, position, Color.White);
             }
@@ -43,12 +44,29 @@ namespace Practicum1
             get { return name; }
         }
 
+        public Vector2 Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+
+        public bool Visible
+        {
+            get { return visible; }
+            set { visible = value; }
+        }
+
+        public Texture2D Sprite
+        {
+            get { return sprite; }
+        }
+
         public virtual void Reset()
         {
 
         }
 
-        public virtual void HandleInput()
+        public virtual void HandleInput(InputHelper inputHelper)
         {
             
         }

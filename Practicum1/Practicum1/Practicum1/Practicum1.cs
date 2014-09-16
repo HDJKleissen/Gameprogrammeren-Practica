@@ -26,6 +26,7 @@ namespace Practicum1
         protected static Point screen;
         protected static SpriteFont gameFont;
         protected static GameStateManager gameStateManager;
+        protected static InputHelper inputHelper;
 
         public Practicum1()
         {
@@ -33,21 +34,24 @@ namespace Practicum1
             Content.RootDirectory = "Content";
 
             gameStateManager = new GameStateManager();
+            inputHelper = new InputHelper();
         }
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             screen = new Point(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-
-            /*player1 = new Paddle(Content.Load<Texture2D>("rodeSpeler"), Content.Load<Texture2D>("balRood"), new Vector2(0, 300), "Player 1");
-            player2 = new Paddle(Content.Load<Texture2D>("blauweSpeler"), Content.Load<Texture2D>("balBlauw"), new Vector2(Practicum1.Screen.X - 15, 300), "Player 2");
             gameFont = Content.Load<SpriteFont>("GameFont");
+
+            player1 = new Paddle(Content.Load<Texture2D>("rodeSpeler"), Content.Load<Texture2D>("balRood"), new Vector2(0, 300), 350, Keys.W, Keys.S, "Player 1");
+            player2 = new Paddle(Content.Load<Texture2D>("blauweSpeler"), Content.Load<Texture2D>("balBlauw"), new Vector2(Practicum1.Screen.X - 15, 300),350, Keys.Up, Keys.Down, "Player 2");
             paddleList.Add(player1);
             paddleList.Add(player2);
             ball = new Ball(Content.Load<Texture2D>("bal"), new Vector2(Practicum1.Screen.X / 2, Practicum1.Screen.Y / 2), 275, paddleList, "Ball");
-            */
-            gameStateManager.AddGameState("mainMenu", new MainMenuState());
-            gameStateManager.SwitchTo("mainMenu");
+            
+            gameStateManager.AddGameState("mainMenuState", new MainMenuState());
+            gameStateManager.AddGameState("twoPlayerState", new TwoPlayerState());
+            gameStateManager.AddGameState("gameOverState", new GameOverState());
+            gameStateManager.SwitchTo("mainMenuState");
         }
         
         protected override void Update(GameTime gameTime)
@@ -66,6 +70,8 @@ namespace Practicum1
                 EndGame(player1);
             else if (player2.Lives <= 0)
                 EndGame(player2);*/
+            inputHelper.Update();
+            gameStateManager.HandleInput(inputHelper);
             gameStateManager.Update(gameTime);
             base.Update(gameTime);
         }
@@ -99,6 +105,11 @@ namespace Practicum1
         public static GameStateManager GameStateManager
         {
             get { return gameStateManager; }
+        }
+
+        public static InputHelper InputHelper
+        {
+            get { return inputHelper; }
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Practicum1.states
 {
-    class State : IGameLoopObject
+    public class State
     {
         protected List<Object> gameObjects;
         public State()
@@ -40,7 +40,7 @@ namespace Practicum1.states
             get { return gameObjects; }
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             foreach (Object obj in gameObjects)
             {
@@ -55,9 +55,12 @@ namespace Practicum1.states
                 e.Current.Draw(gameTime, spriteBatch);
         }
 
-        public void HandleInput()
+        public virtual void HandleInput(InputHelper inputHelper)
         {
-
+            foreach (Object obj in gameObjects)
+            {
+                obj.HandleInput(inputHelper);
+            }
         }
 
         public void Reset()
