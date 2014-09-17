@@ -19,14 +19,11 @@ namespace Practicum1
     {
         protected GraphicsDeviceManager graphics;
         protected SpriteBatch spriteBatch;
-        public Ball ball;
-        public Paddle player1, player2;
-        public List<Paddle> paddleList = new List<Paddle>();
-
         protected static Point screen;
         protected static SpriteFont gameFont;
         protected static GameStateManager gameStateManager;
         protected static InputHelper inputHelper;
+        protected static Paddle winPaddle;
 
         public Practicum1()
         {
@@ -41,38 +38,17 @@ namespace Practicum1
             spriteBatch = new SpriteBatch(GraphicsDevice);
             screen = new Point(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             gameFont = Content.Load<SpriteFont>("GameFont");
-
-            player1 = new Paddle(Content.Load<Texture2D>("rodeSpeler"), Content.Load<Texture2D>("balRood"), new Vector2(0, 300), 350, Keys.W, Keys.S, "Player 1");
-            player2 = new Paddle(Content.Load<Texture2D>("blauweSpeler"), Content.Load<Texture2D>("balBlauw"), new Vector2(Practicum1.Screen.X - 15, 300),350, Keys.Up, Keys.Down, "Player 2");
-            paddleList.Add(player1);
-            paddleList.Add(player2);
-            ball = new Ball(Content.Load<Texture2D>("bal"), new Vector2(Practicum1.Screen.X / 2, Practicum1.Screen.Y / 2), 275, paddleList, "Ball");
-            
             gameStateManager.AddGameState("mainMenuState", new MainMenuState());
-            gameStateManager.AddGameState("twoPlayerState", new TwoPlayerState());
             gameStateManager.AddGameState("gameOverState", new GameOverState());
+            gameStateManager.AddGameState("twoPlayerState", new TwoPlayerState(Content));
             gameStateManager.SwitchTo("mainMenuState");
         }
         
         protected override void Update(GameTime gameTime)
         {
-            /*if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-            ball.Update(gameTime);
-            player1.Update(gameTime);
-            player2.Update(gameTime);
-            player1.Move(Keys.W, Keys.S, 350);
-            player2.Move(Keys.Up, Keys.Down, 350);
-            player1.checkMaxRange();
-            player2.checkMaxRange();
-
-            if (player1.Lives <= 0)
-                EndGame(player1);
-            else if (player2.Lives <= 0)
-                EndGame(player2);*/
             inputHelper.Update();
-            gameStateManager.HandleInput(inputHelper);
             gameStateManager.Update(gameTime);
+            gameStateManager.HandleInput(inputHelper);
             base.Update(gameTime);
         }
 
@@ -110,6 +86,12 @@ namespace Practicum1
         public static InputHelper InputHelper
         {
             get { return inputHelper; }
+        }
+
+        public static Paddle WinPaddle
+        {
+            get { return winPaddle; }
+            set { winPaddle = value; }
         }
     }
 }

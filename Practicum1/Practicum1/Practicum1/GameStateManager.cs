@@ -54,7 +54,17 @@ namespace Practicum1
         public void HandleInput(InputHelper inputHelper)
         {
             if (currentGameState != null)
+            {
                 currentGameState.HandleInput(inputHelper);
+            }
+        }
+
+        public void Reset()
+        {
+            if(currentGameState != null)
+            {
+                currentGameState.Reset();
+            }
         }
     }
 }

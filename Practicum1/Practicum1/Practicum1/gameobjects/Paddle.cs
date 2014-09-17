@@ -58,13 +58,10 @@ namespace Practicum1
                 DrawLevens(position.X - (livesSprite.Width * lives) + sprite.Width, spriteBatch);
             base.Draw(gameTime, spriteBatch);
         }
-        public void Move(Keys key1, Keys key2, float newVelocity)
-        {
-            
-        }
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            checkMaxRange();
             if (inputHelper.IsKeyDown(key1))
             {
                 velocity.Y = -newVelocity;
@@ -77,6 +74,13 @@ namespace Practicum1
             {
                 velocity.Y = 0;
             }
+            
+        }
+
+        public override void Reset()
+        {
+            lives = 3;
+            base.Reset();
         }
         public int Lives
         {

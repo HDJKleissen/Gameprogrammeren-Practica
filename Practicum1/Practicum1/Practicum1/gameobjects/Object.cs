@@ -10,13 +10,14 @@ namespace Practicum1
     public class Object : IGameLoopObject
     {
         protected Texture2D sprite;
-        protected Vector2 position, velocity;
+        protected Vector2 position, velocity, startPosition;
         protected string name;
         protected bool visible;
         public Object(Texture2D sprite, Vector2 position, string name)
         {
             this.sprite = sprite;
             this.position = position;
+            startPosition = position;
             this.name = name;
             this.visible = true;
         }
@@ -63,7 +64,7 @@ namespace Practicum1
 
         public virtual void Reset()
         {
-
+            position = startPosition;
         }
 
         public virtual void HandleInput(InputHelper inputHelper)
