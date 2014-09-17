@@ -28,18 +28,22 @@ namespace Practicum1.states
             this.Add(player1);
             this.Add(player2);
             this.Add(ball);
-
+            
+            /*
             Array powerUpsArray = Enum.GetValues(typeof(PowerUpType));
             PowerUpType chosenType1 = (PowerUpType)powerUpsArray.GetValue(Practicum1.Random.Next(powerUpsArray.Length));
             Texture2D pwrupSprite1 = TextureFromPowerUpType(chosenType1, Content);
             PowerUpType chosenType2 = (PowerUpType)powerUpsArray.GetValue(Practicum1.Random.Next(powerUpsArray.Length));
             Texture2D pwrupSprite2 = TextureFromPowerUpType(chosenType2, Content);
+            */
 
-
-            powerUp1 = new PowerUp(chosenType1, pwrupSprite1, new Vector2(100, 100), "Powerup 1");
-            powerUp2 = new PowerUp(chosenType2, pwrupSprite2, new Vector2(200, 200), "Powerup 2");
+            powerUp1 = new PowerUp(null, new Vector2(0, 0), Content, "Powerup 1");
+            powerUp2 = new PowerUp(null, new Vector2(0, 0), Content, "Powerup 2");
+            
             this.Add(powerUp1);
             this.Add(powerUp2);
+            powerUpList.Add(powerUp1);
+            powerUpList.Add(powerUp2);
         }
 
         public override void Update(GameTime gameTime)
@@ -63,23 +67,6 @@ namespace Practicum1.states
         {
             get { return powerUpsOn; }
             set { powerUpsOn = value; }
-        }
-
-        public Texture2D TextureFromPowerUpType(PowerUpType chosenType, ContentManager Content)
-        {
-            switch (chosenType)
-            {
-                case PowerUpType.OPSmaller:
-                    return Content.Load<Texture2D>("pwrupOPSmaller");
-                case PowerUpType.OPSlower:
-                    return Content.Load<Texture2D>("pwrupOPSlower");
-                case PowerUpType.TPBigger:
-                    return Content.Load<Texture2D>("pwrupTPBigger");
-                case PowerUpType.TPFaster:
-                    return Content.Load<Texture2D>("pwrupTPFaster");
-                default:
-                    return Content.Load<Texture2D>("");
-            }
         }
 
         public static List<PowerUp> PowerUpList

@@ -16,7 +16,6 @@ namespace Practicum1
         double direction, speed, startSpeed;
         List<Paddle> paddleList = new List<Paddle>();
         Paddle lastBounce = null;
-        Rectangle ballBounds;
 
         public Ball(Texture2D sprite, Vector2 position, double speed, List<Paddle> paddleList, string name)
             : base(sprite, position, name)
@@ -25,8 +24,8 @@ namespace Practicum1
             this.speed = speed;
             startSpeed = speed;
             this.paddleList = paddleList;
-            Rectangle ballBounds = this.BoundingBox;            
         }
+
         public override void Update(GameTime gameTime)
         {
             velocity.X = (float)(speed * Math.Cos(direction));
@@ -59,7 +58,13 @@ namespace Practicum1
                         paddle.Lives = paddle.Lives - 1;
                         Reset(paddle);
                     }
-            
+            foreach (PowerUp pwrUp in TwoPlayerState.PowerUpList)
+            {
+                if(CheckCollision(pwrUp) && pwrUp.Visible)
+                {
+                    pwrUp.Reset();
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -78,12 +83,12 @@ namespace Practicum1
             base.Draw(gameTime, spriteBatch);
         }
 
-        public bool CheckCollision(Paddle paddle)
+        public bool CheckCollision(Object obj)
         {
-            Rectangle paddleBounds = paddle.BoundingBox;
-            return ballBounds.Intersects(paddleBounds);
+            Rectangle otherBounds = obj.BoundingBox;
+            return BoundingBox.Intersects(otherBounds);
         }
-        
+
         public void Bounce()
         {            
             direction = 2 * Math.PI - direction;
@@ -108,16 +113,6 @@ namespace Practicum1
             speed *= 1.05;
         }
 
-        public PowerUp CollisionWithPwrup()
-        {
-            foreach(PowerUp pwrUp in TwoPlayerState.PowerUpList)
-            {
-                if (ballBounds.Intersects(pwrUp.BoundingBox))
-                    return pwrUp;
-            }
-
-            return null;
-        }
 
         public void Reset(Paddle paddle)
         {
