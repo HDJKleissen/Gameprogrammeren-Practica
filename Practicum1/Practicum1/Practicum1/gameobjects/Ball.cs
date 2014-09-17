@@ -5,6 +5,9 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Practicum1.gameobjects;
+using Practicum1.states;
+
 namespace Practicum1
 {
     public class Ball : Object
@@ -13,6 +16,8 @@ namespace Practicum1
         double direction, speed, startSpeed;
         List<Paddle> paddleList = new List<Paddle>();
         Paddle lastBounce = null;
+        Rectangle ballBounds;
+
         public Ball(Texture2D sprite, Vector2 position, double speed, List<Paddle> paddleList, string name)
             : base(sprite, position, name)
         {
@@ -20,7 +25,7 @@ namespace Practicum1
             this.speed = speed;
             startSpeed = speed;
             this.paddleList = paddleList;
-            
+            Rectangle ballBounds = this.BoundingBox;            
         }
         public override void Update(GameTime gameTime)
         {
@@ -76,7 +81,6 @@ namespace Practicum1
         public bool CheckCollision(Paddle paddle)
         {
             Rectangle paddleBounds = paddle.BoundingBox;
-            Rectangle ballBounds = this.BoundingBox;
             return ballBounds.Intersects(paddleBounds);
         }
         
@@ -102,6 +106,17 @@ namespace Practicum1
             }
             lastBounce = paddle;
             speed *= 1.05;
+        }
+
+        public PowerUp CollisionWithPwrup()
+        {
+            foreach(PowerUp pwrUp in TwoPlayerState.PowerUpList)
+            {
+                if (ballBounds.Intersects(pwrUp.BoundingBox))
+                    return pwrUp;
+            }
+
+            return null;
         }
 
         public void Reset(Paddle paddle)
