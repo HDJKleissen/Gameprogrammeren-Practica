@@ -75,6 +75,7 @@
     <Compile Include="gameobjects\Ball.cs" />
     <Compile Include="gameobjects\Object.cs" />
     <Compile Include="gameobjects\Paddle.cs" />
+    <Compile Include="gameobjects\PowerUp.cs" />
     <Compile Include="gameobjects\TextObject.cs" />
     <Compile Include="GameStateManager.cs" />
     <Compile Include="IGameLoopObject.cs" />

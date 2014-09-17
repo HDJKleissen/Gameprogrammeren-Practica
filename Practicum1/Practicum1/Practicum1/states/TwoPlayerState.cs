@@ -12,9 +12,12 @@ namespace Practicum1.states
 {
     class TwoPlayerState : State
     {
-        public Ball ball, ball2;
+        public Ball ball;
         public Paddle player1, player2;
         public List<Paddle> paddleList = new List<Paddle>();
+        public enum powerUpType { OPSmaller, OPSlower, TPBigger, TPFaster };
+        public bool powerUpsOn;
+        public PowerUp powerUp1, powerUp2;
         public TwoPlayerState(ContentManager Content)
         {
             player1 = new Paddle(Content.Load<Texture2D>("rodeSpeler"), Content.Load<Texture2D>("balRood"), new Vector2(0, 300), 350, Keys.W, Keys.S, "Player 1");
@@ -22,11 +25,13 @@ namespace Practicum1.states
             paddleList.Add(player1);
             paddleList.Add(player2);
             ball = new Ball(Content.Load<Texture2D>("bal"), new Vector2(Practicum1.Screen.X / 2, Practicum1.Screen.Y / 2), 275, paddleList, "Ball");
-            ball2 = new Ball(Content.Load<Texture2D>("bal"), new Vector2(Practicum1.Screen.X / 2 - 200, Practicum1.Screen.Y / 2), 275, paddleList, "Ball2, ");
             this.Add(player1);
             this.Add(player2);
             this.Add(ball);
-            this.Add(ball2);
+
+            Array powerUpsArray = Enum.GetValues(typeof(powerUpType));
+            powerUpType chosenType = (powerUpType)powerUpsArray.GetValue(Practicum1.Random.Next(powerUpsArray.Length));
+            powerUp1 = new PowerUp(chosenType,Content.Load<Texture2D>(""), new Vector2(100,100), "Powerup 1");
         }
 
         public override void Update(GameTime gameTime)
@@ -44,6 +49,12 @@ namespace Practicum1.states
                 Practicum1.GameStateManager.SwitchTo("gameOverState");
             }
             base.Update(gameTime);
+        }
+
+        public bool PowerUpsOn
+        {
+            get { return powerUpsOn; }
+            set { powerUpsOn = value; }
         }
     }
 }

@@ -13,13 +13,12 @@ namespace Practicum1.states
     class MainMenuState : State
     {
         TextObject pressStartText;
-        int i = 0;
         public MainMenuState()
         {
             pressStartText = new TextObject("Press <SPACEBAR> to begin\na game with two players", new Vector2(Practicum1.Screen.X/2-180, Practicum1.Screen.Y/2-50), Color.Black, null, "Main Menu Text");
             this.Add(pressStartText);
         }
-
+        
         public override void HandleInput(InputHelper inputHelper)
         {
             if (inputHelper.IsKeyPressed(Keys.Space))

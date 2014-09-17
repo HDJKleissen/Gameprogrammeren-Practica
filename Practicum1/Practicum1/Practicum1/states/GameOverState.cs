@@ -22,7 +22,7 @@ namespace Practicum1.states
             }
             else
             {
-                winText.Text = winPaddle.Name + " has won! Press space to return to main menu\nor press R to have a rematch";
+                winText.Text = winPaddle.Name + " has won!\nPress space to return to main menu\nor press R to have a rematch";
             }
         }
 

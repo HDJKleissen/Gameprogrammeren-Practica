@@ -12,7 +12,7 @@ namespace Practicum1
         Random random = new Random();
         double direction, speed, startSpeed;
         List<Paddle> paddleList = new List<Paddle>();
-        
+        Paddle lastBounce = null;
         public Ball(Texture2D sprite, Vector2 position, double speed, List<Paddle> paddleList, string name)
             : base(sprite, position, name)
         {
@@ -60,7 +60,7 @@ namespace Practicum1
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            // debugging
+            /* debugging
             int i = 0;
             foreach(Paddle paddle in paddleList)
             {
@@ -69,7 +69,7 @@ namespace Practicum1
             }
             spriteBatch.DrawString(Practicum1.GameFont, "velocity: " + velocity, new Vector2(100, 60), Color.Black);
             spriteBatch.DrawString(Practicum1.GameFont, "position: " + BoundingBox, new Vector2(100, 80), Color.Black);
-            spriteBatch.DrawString(Practicum1.GameFont, "direction: " + direction, new Vector2(100, 100), Color.Black);
+            spriteBatch.DrawString(Practicum1.GameFont, "direction: " + direction, new Vector2(100, 100), Color.Black);*/
             base.Draw(gameTime, spriteBatch);
         }
 
@@ -85,13 +85,14 @@ namespace Practicum1
             direction = 2 * Math.PI - direction;
         }
 
-        public void Bounce(Object paddle)
+        public void Bounce(Paddle paddle)
         {
             if(paddle.Name.Equals("Player 1"))
             {
                 float relativeIntersectY = (paddle.Position.Y + (paddle.Sprite.Height / 2) - position.Y);
                 float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height / 2));
                 direction = normalizedIntersectY * (-1 * Math.PI / 3);
+                
             }
             else if(paddle.Name.Equals("Player 2"))
             {
@@ -99,6 +100,7 @@ namespace Practicum1
                 float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height / 2));
                 direction = Math.PI - normalizedIntersectY * (-1 * Math.PI / 3);
             }
+            lastBounce = paddle;
             speed *= 1.05;
         }
 

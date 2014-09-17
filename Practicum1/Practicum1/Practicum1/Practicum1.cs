@@ -23,13 +23,14 @@ namespace Practicum1
         protected static SpriteFont gameFont;
         protected static GameStateManager gameStateManager;
         protected static InputHelper inputHelper;
+        protected static Random random;
         public static Paddle winPaddle;
 
         public Practicum1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
+            random = new Random();
             gameStateManager = new GameStateManager();
             inputHelper = new InputHelper();
         }
@@ -81,6 +82,11 @@ namespace Practicum1
         public static InputHelper InputHelper
         {
             get { return inputHelper; }
+        }
+
+        public static Random Random
+        {
+            get { return random; }
         }
 
         public static Paddle WinPaddle
