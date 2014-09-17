@@ -23,7 +23,7 @@ namespace Practicum1
         protected static SpriteFont gameFont;
         protected static GameStateManager gameStateManager;
         protected static InputHelper inputHelper;
-        protected static Paddle winPaddle;
+        public static Paddle winPaddle;
 
         public Practicum1()
         {
@@ -61,11 +61,6 @@ namespace Practicum1
             player2.Draw(gameTime, spriteBatch);*/
             gameStateManager.Draw(gameTime, spriteBatch);
             spriteBatch.End();
-        }
-
-        private void EndGame(Paddle winningPlayer)
-        {
-            
         }
 
         public static Point Screen

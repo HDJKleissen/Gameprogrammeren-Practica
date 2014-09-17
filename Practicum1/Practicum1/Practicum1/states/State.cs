@@ -63,7 +63,7 @@ namespace Practicum1.states
             }
         }
 
-        public void Reset()
+        public virtual void Reset()
         {
             foreach (Object obj in gameObjects)
             {
