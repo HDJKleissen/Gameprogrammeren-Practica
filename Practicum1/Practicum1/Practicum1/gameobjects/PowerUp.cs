@@ -11,7 +11,6 @@ namespace Practicum1.gameobjects
 {
     public class PowerUp : Object
     {
-        private PowerUpType chosenType;
         private ContentManager Content;
 
         public PowerUp(Texture2D sprite, Vector2 position,ContentManager Content, string name)
