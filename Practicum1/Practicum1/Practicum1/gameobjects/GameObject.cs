@@ -5,21 +5,24 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-namespace Practicum1
+namespace Practicum1.gameobjects
 {
-    public class Object : IGameLoopObject
+    public class GameObject : IGameLoopObject
     {
         protected Texture2D sprite;
         protected Vector2 position, velocity, startPosition;
         protected string name;
         protected bool visible;
-        public Object(Texture2D sprite, Vector2 position, string name)
+        public float spriteScale;
+
+        public GameObject(Texture2D sprite, Vector2 position, string name)
         {
             this.sprite = sprite;
             this.position = position;
             startPosition = position;
             this.name = name;
             this.visible = true;
+            spriteScale = 1f;
         }
 
 
@@ -31,13 +34,13 @@ namespace Practicum1
         {
             if (sprite != null && visible)
             {
-                spriteBatch.Draw(sprite, position, Color.White);
+                spriteBatch.Draw(sprite, position, null, Color.White, 0, Vector2.Zero, new Vector2(1, spriteScale), SpriteEffects.None, 0);
             }
         }
 
         public Rectangle BoundingBox
         {
-            get { return new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height); }
+            get{ return new Rectangle((int)position.X, (int)position.Y, sprite.Width, (int)(sprite.Height * spriteScale)); }
         }
 
         public string Name
@@ -60,6 +63,13 @@ namespace Practicum1
         public Texture2D Sprite
         {
             get { return sprite; }
+            set { sprite = value; }
+        }
+
+        public float SpriteScale
+        {
+            get { return spriteScale; }
+            set { spriteScale = value; }
         }
 
         public virtual void Reset()

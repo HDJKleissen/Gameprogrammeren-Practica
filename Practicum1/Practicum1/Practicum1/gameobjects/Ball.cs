@@ -7,15 +7,16 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Practicum1.gameobjects;
 using Practicum1.states;
+using System.Diagnostics;
 
-namespace Practicum1
+namespace Practicum1.gameobjects
 {
-    public class Ball : Object
+    public class Ball : GameObject
     {
         Random random = new Random();
         double direction, speed, startSpeed;
         List<Paddle> paddleList = new List<Paddle>();
-        Paddle lastBounce = null;
+        Paddle lastBouncePaddle = null;
 
         public Ball(Texture2D sprite, Vector2 position, double speed, List<Paddle> paddleList, string name)
             : base(sprite, position, name)
@@ -62,7 +63,24 @@ namespace Practicum1
             {
                 if(CheckCollision(pwrUp) && pwrUp.Visible)
                 {
+                    Debug.Print("collision between ball and " + pwrUp.Name);
                     pwrUp.Reset();
+                    if (lastBouncePaddle != null)
+                    {
+                        foreach (Paddle paddle in paddleList)
+                        {
+                            if ((pwrUp.ChosenType == PowerUpType.OPSmaller || pwrUp.ChosenType == PowerUpType.OPSlower) && !paddle.Name.Equals(lastBouncePaddle.Name))
+                            {
+                                paddle.HandlePowerup(pwrUp.ChosenType);
+                                Debug.Print("poweruptype is " + pwrUp.ChosenType);
+                            }
+                            else if ((pwrUp.ChosenType == PowerUpType.TPBigger || pwrUp.ChosenType == PowerUpType.TPFaster) && paddle.Name.Equals(lastBouncePaddle.Name))
+                            {
+                                paddle.HandlePowerup(pwrUp.ChosenType);
+                                Debug.Print("poweruptype is " + pwrUp.ChosenType + "and is for player" + paddle.Name);
+                            }
+                        }
+                    }
                 }
             }
             base.Update(gameTime);
@@ -83,7 +101,7 @@ namespace Practicum1
             base.Draw(gameTime, spriteBatch);
         }
 
-        public bool CheckCollision(Object obj)
+        public bool CheckCollision(GameObject obj)
         {
             Rectangle otherBounds = obj.BoundingBox;
             return BoundingBox.Intersects(otherBounds);
@@ -98,19 +116,19 @@ namespace Practicum1
         {
             if(paddle.Name.Equals("Player 1"))
             {
-                float relativeIntersectY = (paddle.Position.Y + (paddle.Sprite.Height / 2) - position.Y);
-                float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height / 2));
+                float relativeIntersectY = (paddle.Position.Y + (paddle.Sprite.Height / 2) * paddle.SpriteScale - position.Y);
+                float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height / 2) * paddle.SpriteScale);
                 direction = normalizedIntersectY * (-1 * Math.PI / 3);
                 
             }
             else if(paddle.Name.Equals("Player 2"))
             {
-                float relativeIntersectY = (paddle.Position.Y + (paddle.Sprite.Height / 2) - position.Y);
-                float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height / 2));
+                float relativeIntersectY = (paddle.Position.Y + (paddle.Sprite.Height / 2) * paddle.SpriteScale - position.Y);
+                float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height / 2) * paddle.SpriteScale);
                 direction = Math.PI - normalizedIntersectY * (-1 * Math.PI / 3);
             }
-            lastBounce = paddle;
-            speed *= 1.05;
+            lastBouncePaddle = paddle;
+            speed *= 1.04;
         }
 
 
@@ -122,7 +140,7 @@ namespace Practicum1
                 direction = 0.75 * Math.PI + random.NextDouble() * 0.5 * Math.PI;
             else if (paddle.Name.Equals("Player 2"))
                 direction = 0.25 * Math.PI - random.NextDouble() * 0.5 * Math.PI;
-            
+            lastBouncePaddle = null;
             speed = startSpeed;
         }
     }

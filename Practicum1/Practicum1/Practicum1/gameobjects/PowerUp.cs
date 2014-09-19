@@ -9,22 +9,21 @@ using Practicum1.states;
 
 namespace Practicum1.gameobjects
 {
-    public class PowerUp : Object
+    public class PowerUp : GameObject
     {
         private ContentManager Content;
-
-        public PowerUp(Texture2D sprite, Vector2 position,ContentManager Content, string name)
+        private PowerUpType chosenType;
+        public PowerUp(Texture2D sprite, Vector2 position, ContentManager Content, string name)
             : base(sprite, position, name)
         {
             this.Content = Content;
             Reset();
-            ChooseRandomPowerUp();
         }
 
         public void ChooseRandomPowerUp()
         {
             Array powerUpsArray = Enum.GetValues(typeof(PowerUpType));
-            PowerUpType chosenType = (PowerUpType)powerUpsArray.GetValue(Practicum1.Random.Next(powerUpsArray.Length));
+            chosenType = (PowerUpType)powerUpsArray.GetValue(Practicum1.Random.Next(powerUpsArray.Length));
             sprite = TextureFromPowerUpType(chosenType, Content);
         }
 
@@ -45,13 +44,17 @@ namespace Practicum1.gameobjects
             }
         }
 
-
         public override void Reset()
         {
             int newPosX = Practicum1.Random.Next(50, Practicum1.Screen.X - 50);
             int newPosY = Practicum1.Random.Next(25, Practicum1.Screen.Y - 25);
             position = new Vector2(newPosX, newPosY);
             ChooseRandomPowerUp();
+        }
+
+        public PowerUpType ChosenType
+        {
+            get { return chosenType; }
         }
     }
 }

@@ -4,30 +4,31 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Practicum1.gameobjects;
 
 namespace Practicum1.states
 {
     public class State
     {
-        protected List<Object> gameObjects;
+        protected List<GameObject> gameObjects;
         public State()
         {
-            gameObjects = new List<Object>();
+            gameObjects = new List<GameObject>();
         }
 
-        public void Add(Object obj)
+        public void Add(GameObject obj)
         {
             gameObjects.Add(obj);
         }
 
-        public void Remove(Object obj)
+        public void Remove(GameObject obj)
         {
             gameObjects.Remove(obj);
         }
 
-        public Object Find(string name)
+        public GameObject Find(string name)
         {
-            foreach (Object obj in gameObjects)
+            foreach (GameObject obj in gameObjects)
             {
                 if (obj.Name == name)
                     return obj;
@@ -35,14 +36,14 @@ namespace Practicum1.states
             return null;
         }
 
-        public List<Object> Objects
+        public List<GameObject> Objects
         {
             get { return gameObjects; }
         }
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (Object obj in gameObjects)
+            foreach (GameObject obj in gameObjects)
             {
                 obj.Update(gameTime);
             }
@@ -50,14 +51,14 @@ namespace Practicum1.states
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            List<Object>.Enumerator e = gameObjects.GetEnumerator();
+            List<GameObject>.Enumerator e = gameObjects.GetEnumerator();
             while (e.MoveNext())
                 e.Current.Draw(gameTime, spriteBatch);
         }
 
         public virtual void HandleInput(InputHelper inputHelper)
         {
-            foreach (Object obj in gameObjects)
+            foreach (GameObject obj in gameObjects)
             {
                 obj.HandleInput(inputHelper);
             }
@@ -65,7 +66,7 @@ namespace Practicum1.states
 
         public virtual void Reset()
         {
-            foreach (Object obj in gameObjects)
+            foreach (GameObject obj in gameObjects)
             {
                 obj.Reset();
             }

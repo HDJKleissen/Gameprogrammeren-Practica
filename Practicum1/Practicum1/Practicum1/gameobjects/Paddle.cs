@@ -6,16 +6,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-namespace Practicum1
+using System.Diagnostics;
+namespace Practicum1.gameobjects
 {
-    public class Paddle : Object
+    public class Paddle : GameObject
     {
         int lives;
-        Texture2D livesSprite;
+        Texture2D livesSprite, bigSprite, smallSprite, origSprite;
         Keys key1, key2;
         float newVelocity;
 
-        public Paddle(Texture2D sprite, Texture2D livesSprite, Vector2 position, float newVelocity, Keys key1, Keys key2, String name)
+        public Paddle(Texture2D sprite, Texture2D bigSprite, Texture2D smallSprite, Texture2D livesSprite, Vector2 position, float newVelocity, Keys key1, Keys key2, String name)
             : base(sprite, position, name)
         {
             this.position = position;
@@ -37,11 +38,12 @@ namespace Practicum1
             {
                 position.Y = 0;
             }
-            else if (position.Y + sprite.Height > Practicum1.Screen.Y)
+            else if (position.Y + sprite.Height*spriteScale > Practicum1.Screen.Y)
             {
-                position.Y = Practicum1.Screen.Y - sprite.Height;
+                position.Y = Practicum1.Screen.Y - sprite.Height*spriteScale;
             }
         }
+
         public void DrawLevens(float posX, SpriteBatch spriteBatch)
         {
             // draw lives
@@ -50,6 +52,7 @@ namespace Practicum1
                 spriteBatch.Draw(livesSprite, new Vector2(i * livesSprite.Width + posX, 0), Color.White);
             }
         }
+        
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (name.Equals("Player 1"))
@@ -75,6 +78,30 @@ namespace Practicum1
                 velocity.Y = 0;
             }
             
+        }
+
+        public void HandlePowerup(PowerUpType powerUp)
+        {
+            Debug.Print("handling powerup");
+            switch(powerUp)
+            {
+                case PowerUpType.OPSmaller:
+                    spriteScale = 0.5f;
+                    Debug.Print("applying smaller powerup for " + name);
+                    break;
+                case PowerUpType.OPSlower:
+                    Debug.Print("applying slower powerup for " + name);
+                    break;
+                case PowerUpType.TPBigger:
+                    spriteScale = 1.5f;
+                    Debug.Print("applying bigger powerup for " + name);
+                    break;
+                case PowerUpType.TPFaster:
+                    Debug.Print("applying faster powerup for " + name);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public override void Reset()

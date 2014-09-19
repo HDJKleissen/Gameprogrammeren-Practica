@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Practicum1.gameobjects
 {
-    class TextObject : Object
+    class TextObject : GameObject
     {
         protected string text;
         protected Color color;
