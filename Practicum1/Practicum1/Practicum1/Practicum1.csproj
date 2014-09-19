@@ -88,6 +88,8 @@
     <Compile Include="states\MainMenuState.cs" />
     <Compile Include="states\State.cs" />
     <Compile Include="states\TwoPlayerState.cs" />
+    <Compile Include="Timer.cs" />
+    <Compile Include="TimerManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

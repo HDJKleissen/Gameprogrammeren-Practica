@@ -12,11 +12,11 @@ namespace Practicum1.gameobjects
     public class Paddle : GameObject
     {
         int lives;
-        Texture2D livesSprite, bigSprite, smallSprite, origSprite;
+        Texture2D livesSprite;
         Keys key1, key2;
-        float newVelocity;
+        float newVelocity, baseVelocity;
 
-        public Paddle(Texture2D sprite, Texture2D bigSprite, Texture2D smallSprite, Texture2D livesSprite, Vector2 position, float newVelocity, Keys key1, Keys key2, String name)
+        public Paddle(Texture2D sprite, Texture2D livesSprite, Vector2 position, float newVelocity, Keys key1, Keys key2, String name)
             : base(sprite, position, name)
         {
             this.position = position;
@@ -25,6 +25,7 @@ namespace Practicum1.gameobjects
             this.key1 = key1;
             this.key2 = key2;
             this.newVelocity = newVelocity;
+            baseVelocity = newVelocity;
             lives = 3;
         }
         public void checkMaxRange()
@@ -90,6 +91,7 @@ namespace Practicum1.gameobjects
                     Debug.Print("applying smaller powerup for " + name);
                     break;
                 case PowerUpType.OPSlower:
+                    newVelocity = baseVelocity / 2;
                     Debug.Print("applying slower powerup for " + name);
                     break;
                 case PowerUpType.TPBigger:
@@ -97,6 +99,7 @@ namespace Practicum1.gameobjects
                     Debug.Print("applying bigger powerup for " + name);
                     break;
                 case PowerUpType.TPFaster:
+                    newVelocity = baseVelocity * 2;
                     Debug.Print("applying faster powerup for " + name);
                     break;
                 default:

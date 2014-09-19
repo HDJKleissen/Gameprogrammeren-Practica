@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Practicum1.states;
+using System.Diagnostics;
 
 namespace Practicum1.gameobjects
 {
@@ -13,10 +14,18 @@ namespace Practicum1.gameobjects
     {
         private ContentManager Content;
         private PowerUpType chosenType;
+        private Texture2D OPSmallerspr, OPSlowerspr, TPBiggerspr, TPFasterspr;
+        private Timer myTimer;
+
         public PowerUp(Texture2D sprite, Vector2 position, ContentManager Content, string name)
             : base(sprite, position, name)
         {
             this.Content = Content;
+            OPSmallerspr = Content.Load<Texture2D>("pwrupOPSmaller");
+            OPSlowerspr = Content.Load<Texture2D>("pwrupOPSlower");
+            TPBiggerspr = Content.Load<Texture2D>("pwrupTPBigger");
+            TPFasterspr = Content.Load<Texture2D>("pwrupTPFaster");
+            myTimer = new Timer(1f);
             Reset();
         }
 
@@ -27,18 +36,19 @@ namespace Practicum1.gameobjects
             sprite = TextureFromPowerUpType(chosenType, Content);
         }
 
-        public Texture2D TextureFromPowerUpType(PowerUpType chosenType, ContentManager Content)
+        public Texture2D TextureFromPowerUpType(PowerUpType tempType, ContentManager Content)
         {
-            switch (chosenType)
+            Debug.Print(name + " has chosen " + tempType);
+            switch (tempType)
             {
                 case PowerUpType.OPSmaller:
-                    return Content.Load<Texture2D>("pwrupOPSmaller");
+                    return OPSmallerspr;
                 case PowerUpType.OPSlower:
-                    return Content.Load<Texture2D>("pwrupOPSlower");
+                    return OPSlowerspr;
                 case PowerUpType.TPBigger:
-                    return Content.Load<Texture2D>("pwrupTPBigger");
+                    return TPBiggerspr;
                 case PowerUpType.TPFaster:
-                    return Content.Load<Texture2D>("pwrupTPFaster");
+                    return TPFasterspr;
                 default:
                     return Content.Load<Texture2D>("");
             }

@@ -64,7 +64,6 @@ namespace Practicum1.gameobjects
                 if(CheckCollision(pwrUp) && pwrUp.Visible)
                 {
                     Debug.Print("collision between ball and " + pwrUp.Name);
-                    pwrUp.Reset();
                     if (lastBouncePaddle != null)
                     {
                         foreach (Paddle paddle in paddleList)
@@ -72,15 +71,16 @@ namespace Practicum1.gameobjects
                             if ((pwrUp.ChosenType == PowerUpType.OPSmaller || pwrUp.ChosenType == PowerUpType.OPSlower) && !paddle.Name.Equals(lastBouncePaddle.Name))
                             {
                                 paddle.HandlePowerup(pwrUp.ChosenType);
-                                Debug.Print("poweruptype is " + pwrUp.ChosenType);
+                                Debug.Print("poweruptype is " + pwrUp.ChosenType + " and is for " + paddle.Name);
                             }
                             else if ((pwrUp.ChosenType == PowerUpType.TPBigger || pwrUp.ChosenType == PowerUpType.TPFaster) && paddle.Name.Equals(lastBouncePaddle.Name))
                             {
                                 paddle.HandlePowerup(pwrUp.ChosenType);
-                                Debug.Print("poweruptype is " + pwrUp.ChosenType + "and is for player" + paddle.Name);
+                                Debug.Print("poweruptype is " + pwrUp.ChosenType + " and is for " + paddle.Name);
                             }
                         }
                     }
+                    pwrUp.Reset();
                 }
             }
             base.Update(gameTime);

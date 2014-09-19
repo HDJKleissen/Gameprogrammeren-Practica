@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Practicum1.states;
 using Practicum1.gameobjects;
+
 namespace Practicum1
 {
     /// <summary>
@@ -24,6 +25,7 @@ namespace Practicum1
         protected static GameStateManager gameStateManager;
         protected static InputHelper inputHelper;
         protected static Random random;
+        protected static TimerManager timerManager;
         public static Paddle winPaddle;
 
         public Practicum1()
@@ -33,6 +35,7 @@ namespace Practicum1
             random = new Random();
             gameStateManager = new GameStateManager();
             inputHelper = new InputHelper();
+            timerManager = new TimerManager();
         }
         protected override void LoadContent()
         {
@@ -50,6 +53,7 @@ namespace Practicum1
             inputHelper.Update();
             gameStateManager.Update(gameTime);
             gameStateManager.HandleInput(inputHelper);
+            timerManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -57,9 +61,6 @@ namespace Practicum1
         {
             spriteBatch.Begin();
             GraphicsDevice.Clear(Color.White);
-            /*ball.Draw(gameTime, spriteBatch);
-            player1.Draw(gameTime, spriteBatch);
-            player2.Draw(gameTime, spriteBatch);*/
             gameStateManager.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
@@ -87,6 +88,11 @@ namespace Practicum1
         public static Random Random
         {
             get { return random; }
+        }
+
+        public static TimerManager TimerManager
+        {
+            get { return timerManager; }
         }
 
         public static Paddle WinPaddle
