@@ -6,37 +6,45 @@ using Microsoft.Xna.Framework;
 
 namespace Practicum1
 {
-    class TimerManager
+    public class TimerManager
     {
-        Dictionary<string, Timer> timers;
+        Dictionary<string, float> timers;
         public TimerManager()
         {
-            timers = new Dictionary<string, Timer>();
+            timers = new Dictionary<string, float>();
         }
 
-        public void addTimer(string name, Timer timer)
+        public void setTimer(string name, float time)
         {
-            timers[name] = timer;
+            timers[name] = time;
         }
 
         public void removeTimer(string name)
         {
-            if(timers[name] != null)
+            timers.Remove(name);   
+        }
+
+        public float getTimeLeft(string name)
+        {
+            return timers[name];
+        }
+        public void Update(GameTime gameTime)
+        {
+            foreach(string key in new List<string>(timers.Keys))
             {
-                timers.Remove(name);
+                if (timers[key] >= 0)
+                {
+                    float tempTime = timers[key];
+                    float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    tempTime -= elapsedTime;
+                    timers[key] = tempTime;
+                }
             }
         }
 
-        public void Update(GameTime gameTime)
+        public bool TimerDone(string name)
         {
-            foreach(var timer in timers.Keys)
-            {
-                timers[timer].Update(gameTime);
-                if(timers[timer].timerDone())
-                {
-                    removeTimer(timer);
-                }
-            }
+            return timers[name] < 0;
         }
     }
 }

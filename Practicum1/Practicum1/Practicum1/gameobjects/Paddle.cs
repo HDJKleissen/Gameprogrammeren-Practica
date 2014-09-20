@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 namespace Practicum1.gameobjects
 {
     public class Paddle : GameObject
@@ -27,6 +27,7 @@ namespace Practicum1.gameobjects
             this.newVelocity = newVelocity;
             baseVelocity = newVelocity;
             lives = 3;
+            Practicum1.TimerManager.setTimer(timerName + "1", -1);
         }
         public void checkMaxRange()
         {
@@ -52,6 +53,20 @@ namespace Practicum1.gameobjects
             {
                 spriteBatch.Draw(livesSprite, new Vector2(i * livesSprite.Width + posX, 0), Color.White);
             }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (Practicum1.TimerManager.TimerDone(timerName) && newVelocity != baseVelocity)
+            {
+                newVelocity = baseVelocity;
+            }
+            if(Practicum1.TimerManager.TimerDone(timerName + "1") && spriteScale != 1f)
+            {
+                spriteScale = 1f;
+            }
+            Debug.Print("timer ended, reset stuffs");
         }
         
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -84,22 +99,27 @@ namespace Practicum1.gameobjects
         public void HandlePowerup(PowerUpType powerUp)
         {
             Debug.Print("handling powerup");
+            Debug.Print("set the timer");
             switch(powerUp)
             {
                 case PowerUpType.OPSmaller:
                     spriteScale = 0.5f;
+                    Practicum1.TimerManager.setTimer(timerName + "1", 7.5f);
                     Debug.Print("applying smaller powerup for " + name);
                     break;
                 case PowerUpType.OPSlower:
                     newVelocity = baseVelocity / 2;
+                    Practicum1.TimerManager.setTimer(timerName, 7.5f);
                     Debug.Print("applying slower powerup for " + name);
                     break;
                 case PowerUpType.TPBigger:
                     spriteScale = 1.5f;
+                    Practicum1.TimerManager.setTimer(timerName + "1", 7.5f);
                     Debug.Print("applying bigger powerup for " + name);
                     break;
                 case PowerUpType.TPFaster:
                     newVelocity = baseVelocity * 2;
+                    Practicum1.TimerManager.setTimer(timerName, 7.5f);
                     Debug.Print("applying faster powerup for " + name);
                     break;
                 default:

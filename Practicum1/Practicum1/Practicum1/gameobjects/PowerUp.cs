@@ -15,8 +15,7 @@ namespace Practicum1.gameobjects
         private ContentManager Content;
         private PowerUpType chosenType;
         private Texture2D OPSmallerspr, OPSlowerspr, TPBiggerspr, TPFasterspr;
-        private Timer myTimer;
-
+        
         public PowerUp(Texture2D sprite, Vector2 position, ContentManager Content, string name)
             : base(sprite, position, name)
         {
@@ -25,7 +24,6 @@ namespace Practicum1.gameobjects
             OPSlowerspr = Content.Load<Texture2D>("pwrupOPSlower");
             TPBiggerspr = Content.Load<Texture2D>("pwrupTPBigger");
             TPFasterspr = Content.Load<Texture2D>("pwrupTPFaster");
-            myTimer = new Timer(1f);
             Reset();
         }
 
@@ -54,12 +52,23 @@ namespace Practicum1.gameobjects
             }
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            if(Practicum1.TimerManager.TimerDone(timerName))
+            {
+                visible = true;
+            }
+            base.Update(gameTime);
+        }
+
         public override void Reset()
         {
-            int newPosX = Practicum1.Random.Next(50, Practicum1.Screen.X - 50);
-            int newPosY = Practicum1.Random.Next(25, Practicum1.Screen.Y - 25);
-            position = new Vector2(newPosX, newPosY);
+            Practicum1.TimerManager.setTimer(timerName, 10f);
+            visible = false;
             ChooseRandomPowerUp();
+            int newPosX = Practicum1.Random.Next(sprite.Width * 3, Practicum1.Screen.X - sprite.Width * 3);
+            int newPosY = Practicum1.Random.Next(sprite.Height * 3, Practicum1.Screen.Y - sprite.Height * 3);
+            position = new Vector2(newPosX, newPosY);
         }
 
         public PowerUpType ChosenType

@@ -14,15 +14,18 @@ namespace Practicum1.gameobjects
         protected string name;
         protected bool visible;
         public float spriteScale;
+        public string timerName;
 
         public GameObject(Texture2D sprite, Vector2 position, string name)
         {
+            timerName = name.Replace(" ", string.Empty) + "timer";
             this.sprite = sprite;
             this.position = position;
             startPosition = position;
             this.name = name;
             this.visible = true;
             spriteScale = 1f;
+            Practicum1.TimerManager.setTimer(timerName, -1f);
         }
 
 
