@@ -16,7 +16,7 @@ namespace Practicum1
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Practicum1 : Microsoft.Xna.Framework.Game
+    public class Practicum1 : Game
     {
         protected GraphicsDeviceManager graphics;
         protected SpriteBatch spriteBatch;
