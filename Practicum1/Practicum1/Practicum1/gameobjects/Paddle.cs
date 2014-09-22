@@ -103,7 +103,7 @@ namespace Practicum1.gameobjects
             switch(powerUp)
             {
                 case PowerUpType.OPSmaller:
-                    spriteScale = 0.5f;
+                    spriteScale = 0.75f;
                     Practicum1.TimerManager.setTimer(timerName + "1", 7.5f);
                     Debug.Print("applying smaller powerup for " + name);
                     break;

@@ -54,9 +54,13 @@ namespace Practicum1.gameobjects
 
         public override void Update(GameTime gameTime)
         {
-            if(Practicum1.TimerManager.TimerDone(timerName))
+            if(Practicum1.TimerManager.TimerDone(timerName) && Practicum1.PowerUpsOn)
             {
                 visible = true;
+            }
+            else
+            {
+                visible = false;
             }
             base.Update(gameTime);
         }

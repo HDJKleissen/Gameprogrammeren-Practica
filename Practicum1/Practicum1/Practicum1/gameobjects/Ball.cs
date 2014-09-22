@@ -116,15 +116,15 @@ namespace Practicum1.gameobjects
         {
             if(paddle.Name.Equals("Player 1"))
             {
-                float relativeIntersectY = (paddle.Position.Y + (paddle.Sprite.Height / 2) * paddle.SpriteScale - position.Y);
-                float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height / 2) * paddle.SpriteScale);
+                float relativeIntersectY = (paddle.Position.Y + ((paddle.Sprite.Height * paddle.SpriteScale) / 2) - position.Y);
+                float normalizedIntersectY = (relativeIntersectY / ((paddle.Sprite.Height * paddle.SpriteScale) / 2));
                 direction = normalizedIntersectY * (-1 * Math.PI / 3);
                 
             }
             else if(paddle.Name.Equals("Player 2"))
             {
-                float relativeIntersectY = (paddle.Position.Y + (paddle.Sprite.Height / 2) * paddle.SpriteScale - position.Y);
-                float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height / 2) * paddle.SpriteScale);
+                float relativeIntersectY = (paddle.Position.Y + ((paddle.Sprite.Height * paddle.SpriteScale) / 2) - position.Y);
+                float normalizedIntersectY = (relativeIntersectY / ((paddle.Sprite.Height * paddle.SpriteScale) / 2)); 
                 direction = Math.PI - normalizedIntersectY * (-1 * Math.PI / 3);
             }
             lastBouncePaddle = paddle;

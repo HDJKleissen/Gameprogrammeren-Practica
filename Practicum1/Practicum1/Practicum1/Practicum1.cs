@@ -26,7 +26,8 @@ namespace Practicum1
         protected static InputHelper inputHelper;
         protected static Random random;
         protected static TimerManager timerManager;
-        public static Paddle winPaddle;
+        protected static Paddle winPaddle;
+        protected static bool powerUpsOn = true;
 
         public Practicum1()
         {
@@ -99,6 +100,12 @@ namespace Practicum1
         {
             get { return winPaddle; }
             set { winPaddle = value; }
+        }
+
+        public static bool PowerUpsOn
+        {
+            get { return powerUpsOn; }
+            set { powerUpsOn = value; }
         }
     }
 }

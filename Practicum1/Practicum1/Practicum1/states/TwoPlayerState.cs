@@ -16,7 +16,6 @@ namespace Practicum1.states
         public Paddle player1, player2;
         public List<Paddle> paddleList = new List<Paddle>();
         public static List<PowerUp> powerUpList = new List<PowerUp>();
-        public bool powerUpsOn;
         public PowerUp powerUp1, powerUp2;
         public TwoPlayerState(ContentManager Content)
         {
@@ -53,12 +52,6 @@ namespace Practicum1.states
                 Practicum1.GameStateManager.SwitchTo("gameOverState");
             }
             base.Update(gameTime);
-        }
-
-        public bool PowerUpsOn
-        {
-            get { return powerUpsOn; }
-            set { powerUpsOn = value; }
         }
 
         public static List<PowerUp> PowerUpList
