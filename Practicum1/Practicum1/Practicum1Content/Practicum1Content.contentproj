@@ -88,28 +88,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="blauweSpelerGroot.png">
-      <Name>blauweSpelerGroot</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="blauweSpelerKlein.png">
-      <Name>blauweSpelerKlein</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="rodeSpelerGroot.png">
-      <Name>rodeSpelerGroot</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="rodeSpelerKlein.png">
-      <Name>rodeSpelerKlein</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="tempsprt.png">
       <Name>tempsprt</Name>
       <Importer>TextureImporter</Importer>

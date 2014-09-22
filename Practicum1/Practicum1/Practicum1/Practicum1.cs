@@ -37,6 +37,7 @@ namespace Practicum1
             gameStateManager = new GameStateManager();
             inputHelper = new InputHelper();
             timerManager = new TimerManager();
+            graphics.IsFullScreen = false;
         }
         protected override void LoadContent()
         {
@@ -66,6 +67,10 @@ namespace Practicum1
             spriteBatch.End();
         }
 
+        public void setFullscreen()
+        {
+            graphics.IsFullScreen = !graphics.IsFullScreen;
+        }
         public static Point Screen
         {
             get { return screen; }

@@ -75,6 +75,8 @@
     <Compile Include="gameobjects\Ball.cs" />
     <Compile Include="gameobjects\GameObject.cs" />
     <Compile Include="gameobjects\Paddle.cs" />
+    <Compile Include="gameobjects\PaddleHorizontal.cs" />
+    <Compile Include="gameobjects\PaddleVertical.cs" />
     <Compile Include="gameobjects\PowerUp.cs" />
     <Compile Include="gameobjects\PowerUpType.cs" />
     <Compile Include="gameobjects\TextObject.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="states\GameOverState.cs" />
     <Compile Include="states\MainMenuState.cs" />
     <Compile Include="states\State.cs" />
+    <Compile Include="states\FourPlayerState.cs" />
     <Compile Include="states\TwoPlayerState.cs" />
     <Compile Include="TimerManager.cs" />
   </ItemGroup>
