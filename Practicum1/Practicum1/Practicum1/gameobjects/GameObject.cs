@@ -5,16 +5,16 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+
 namespace Practicum1.gameobjects
 {
-    public class GameObject : IGameLoopObject
+    public class GameObject
     {
         protected Texture2D sprite;
         protected Vector2 position, velocity, startPosition;
-        protected string name;
+        protected string name, timerName;
         protected bool visible;
-        public float spriteScale;
-        public string timerName;
+        protected float spriteScale;
 
         public GameObject(Texture2D sprite, Vector2 position, string name)
         {

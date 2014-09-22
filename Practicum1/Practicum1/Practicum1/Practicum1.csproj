@@ -79,7 +79,6 @@
     <Compile Include="gameobjects\PowerUpType.cs" />
     <Compile Include="gameobjects\TextObject.cs" />
     <Compile Include="GameStateManager.cs" />
-    <Compile Include="IGameLoopObject.cs" />
     <Compile Include="InputHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

@@ -17,12 +17,12 @@ namespace Practicum1.states
             winPaddle = Practicum1.WinPaddle;
             if(winText == null)
             {
-                winText = new TextObject(winPaddle.Name + " has won! Press space to return to main menu\nor press R to have a rematch", new Vector2(Practicum1.Screen.X / 2 - 200, Practicum1.Screen.Y - 150), Color.Black, null, "winText");
+                winText = new TextObject(winPaddle.Name + " has won! Press space to return to main menu", new Vector2(Practicum1.Screen.X / 2 - 200, Practicum1.Screen.Y - 150), Color.Black, null, "winText");
                 this.Add(winText);
             }
             else
             {
-                winText.Text = winPaddle.Name + " has won!\nPress space to return to main menu\nor press R to have a rematch";
+                winText.Text = winPaddle.Name + " has won!\nPress space to return to main menu";
             }
         }
 
