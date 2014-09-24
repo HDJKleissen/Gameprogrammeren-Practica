@@ -164,10 +164,11 @@ namespace Practicum1.gameobjects
                 spriteBatch.DrawString(Practicum1.GameFont, "" + paddle.Name + "  " + paddle.BoundingBox + "  " + CheckCollision(paddle), new Vector2(50, 0+i*20), Color.Black);
                 i++;
             }
-            */
+            
             spriteBatch.DrawString(Practicum1.GameFont, "velocity: " + velocity, new Vector2(100, 60), Color.Black);
             spriteBatch.DrawString(Practicum1.GameFont, "position: " + BoundingBox, new Vector2(100, 80), Color.Black);
             spriteBatch.DrawString(Practicum1.GameFont, "direction: " + direction, new Vector2(100, 100), Color.Black);
+             * */
             base.Draw(gameTime, spriteBatch);
         }
 
