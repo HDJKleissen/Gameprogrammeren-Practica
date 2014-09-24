@@ -51,9 +51,16 @@ namespace Practicum1
             gameStateManager.AddGameState("gameOverState", new GameOverState());
             gameStateManager.AddGameState("twoPlayerState", new TwoPlayerState(Content));
             gameStateManager.AddGameState("fourPlayerState", new FourPlayerState(Content));
+            gameStateManager.AddGameState("aiPlayerState", new AIPlayerState(Content));
+            gameStateManager.AddGameState("trollState", new TrollState(Content));
             gameStateManager.AddGameState("helpState", new HelpState());
             gameStateManager.SwitchTo("mainMenuState");
             Debug.Print("Screen size: " + screen);
+        }
+
+        public void ExitGame()
+        {
+            Exit();
         }
         
         protected override void Update(GameTime gameTime)
@@ -77,6 +84,7 @@ namespace Practicum1
         {
             graphics.IsFullScreen = !graphics.IsFullScreen;
         }
+
         public static Point Screen
         {
             get { return screen; }

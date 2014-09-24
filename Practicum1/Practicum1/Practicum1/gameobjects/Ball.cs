@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Practicum1.gameobjects;
 using Practicum1.states;
-using System.Diagnostics;
 
 namespace Practicum1.gameobjects
 {
@@ -34,7 +34,7 @@ namespace Practicum1.gameobjects
 
             State currentState = Practicum1.GameStateManager.GetCurrentGameState();
 
-            if (Practicum1.GameStateManager.GetCurrentGameState("twoPlayerState"))
+            if (!Practicum1.GameStateManager.GetCurrentGameState("fourPlayerState"))
             {
                 if ((position.Y < 0 && velocity.Y < 0) || (position.Y > Practicum1.Screen.Y - sprite.Height && velocity.Y > 0))
                 {
@@ -152,6 +152,13 @@ namespace Practicum1.gameobjects
                     pwrUp.Reset();
                 }
             }
+            if(Practicum1.GameStateManager.GetCurrentGameState("trollState"))
+            {
+                foreach(Paddle paddle in paddleList)
+                {
+                    paddle.Lives = 3;
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -168,7 +175,7 @@ namespace Practicum1.gameobjects
             spriteBatch.DrawString(Practicum1.GameFont, "velocity: " + velocity, new Vector2(100, 60), Color.Black);
             spriteBatch.DrawString(Practicum1.GameFont, "position: " + BoundingBox, new Vector2(100, 80), Color.Black);
             spriteBatch.DrawString(Practicum1.GameFont, "direction: " + direction, new Vector2(100, 100), Color.Black);
-             * */
+            */
             base.Draw(gameTime, spriteBatch);
         }
 

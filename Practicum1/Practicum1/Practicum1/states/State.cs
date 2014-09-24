@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Practicum1.gameobjects;
 
 namespace Practicum1.states
@@ -59,6 +60,11 @@ namespace Practicum1.states
 
         public virtual void HandleInput(InputHelper inputHelper)
         {
+            if (inputHelper.IsKeyPressed(Keys.Escape))
+            {
+                this.Reset();
+                Practicum1.GameStateManager.SwitchTo("mainMenuState");
+            }
             foreach (GameObject obj in gameObjects)
             {
                 obj.HandleInput(inputHelper);

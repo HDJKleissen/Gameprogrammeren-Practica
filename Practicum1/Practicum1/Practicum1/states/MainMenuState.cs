@@ -20,7 +20,7 @@ namespace Practicum1.states
             pressPText = new TextObject("Press <P> to\ntoggle powerups", new Vector2(Practicum1.Screen.X - 250, 25), Color.Black, null, "Press P Text");
             powerUpsToggleText = new TextObject("Powerups: ", new Vector2(Practicum1.Screen.X - 250, 90), Color.Black, null, "PowerUps Toggle Text");
             powerUpsToggleText2 = new TextObject("On", new Vector2(Practicum1.Screen.X - 100, 90), Color.Green, null, "PowerUps Toggle Text 2");
-            pressStartText = new TextObject("Press <1> to begin\na game with two players\n\nPress <2> to begin\n a game with four players", new Vector2(Practicum1.Screen.X/2-180, Practicum1.Screen.Y/2-50), Color.Black, null, "Main Menu Text");
+            pressStartText = new TextObject("Press to play:\n    <1> One player vs AI\n    <2> Two players\n    <3> Four players\n    <4> Trololol?\n\nPress F1 for controls", new Vector2(Practicum1.Screen.X/2-180, Practicum1.Screen.Y/2-50), Color.Black, null, "Main Menu Text");
 
             this.Add(pressPText);
             this.Add(powerUpsToggleText);
@@ -32,12 +32,22 @@ namespace Practicum1.states
         {
             if (inputHelper.IsKeyPressed(Keys.D1))
             {
+                Practicum1.GameStateManager.SwitchTo("aiPlayerState");
+            }
+
+            if (inputHelper.IsKeyPressed(Keys.D2))
+            {
                 Practicum1.GameStateManager.SwitchTo("twoPlayerState");
             }
 
-            if(inputHelper.IsKeyPressed(Keys.D2))
+            if (inputHelper.IsKeyPressed(Keys.D3))
             {
                 Practicum1.GameStateManager.SwitchTo("fourPlayerState");
+            }
+
+            if (inputHelper.IsKeyPressed(Keys.D4))
+            {
+                Practicum1.GameStateManager.SwitchTo("trollState");
             }
             if (inputHelper.IsKeyPressed(Keys.P))
             {
