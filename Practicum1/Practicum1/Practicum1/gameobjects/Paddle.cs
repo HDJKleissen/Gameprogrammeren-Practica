@@ -15,43 +15,55 @@ namespace Practicum1.gameobjects
         Texture2D livesSprite;
         Keys key1, key2;
         float newVelocity, baseVelocity;
+        bool vertical;
 
-        public Paddle(Texture2D sprite, Texture2D livesSprite, Vector2 position, float newVelocity, Keys key1, Keys key2, String name)
+        public Paddle(Texture2D sprite, Texture2D livesSprite, Vector2 position, float newVelocity, Keys key1, Keys key2, bool vertical, String name)
             : base(sprite, position, name)
         {
-            this.position = position;
             this.sprite = sprite;
             this.livesSprite = livesSprite;
+            this.position = position;
+            this.newVelocity = newVelocity;
             this.key1 = key1;
             this.key2 = key2;
-            this.newVelocity = newVelocity;
+            this.vertical = vertical;
             baseVelocity = newVelocity;
             lives = 3;
             Practicum1.TimerManager.setTimer(timerName + "1", -1);
         }
         public void checkMaxRange()
         {
-            //for 4 players horizontal checking
-            //if (position.X < 0 || position.X + sprite.Width > Practicum1.Screen.X)// > Practicum1.Screen.width )
-            // {
-            // velocity.X = 0;
-            // }
-            if (position.Y < 0)
+            if (vertical)
             {
-                position.Y = 0;
+                if (position.Y < 0)
+                {
+                    position.Y = 0;
+                }
+                else if (position.Y + sprite.Height * spriteScale > Practicum1.Screen.Y)
+                {
+                    position.Y = Practicum1.Screen.Y - sprite.Height * spriteScale;
+                }
             }
-            else if (position.Y + sprite.Height*spriteScale > Practicum1.Screen.Y)
+            else
             {
-                position.Y = Practicum1.Screen.Y - sprite.Height*spriteScale;
+                if (position.X < 0)
+                {
+                    position.X = 0;
+                }
+                else if (position.X + sprite.Width * spriteScale > Practicum1.Screen.X)
+                {
+                    position.X = Practicum1.Screen.X - sprite.Width * spriteScale;
+                }
             }
+
         }
 
-        public void DrawLevens(float posX, SpriteBatch spriteBatch)
+        public void DrawLevens(float posX, float posY, SpriteBatch spriteBatch)
         {
             // draw lives
             for (int i = 0; lives > i; i++)
             {
-                spriteBatch.Draw(livesSprite, new Vector2(i * livesSprite.Width + posX, 0), Color.White);
+                spriteBatch.Draw(livesSprite, new Vector2(i * livesSprite.Width + posX, posY), Color.White);
             }
         }
 
@@ -72,28 +84,49 @@ namespace Practicum1.gameobjects
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (name.Equals("Player 1"))
-                DrawLevens(position.X, spriteBatch);
+                DrawLevens(position.X, Practicum1.Screen.Y-livesSprite.Height, spriteBatch);
             else if (name.Equals("Player 2"))
-                DrawLevens(position.X - (livesSprite.Width * lives) + sprite.Width, spriteBatch);
+                DrawLevens(position.X - (livesSprite.Width * lives) + sprite.Width, 0, spriteBatch);
+            else if (name.Equals("Player 3"))
+                DrawLevens(0, position.Y, spriteBatch);
+            else if (name.Equals("Player 4"))
+                DrawLevens(Practicum1.Screen.X - (livesSprite.Width * lives), position.Y, spriteBatch);
             base.Draw(gameTime, spriteBatch);
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             checkMaxRange();
-            if (inputHelper.IsKeyDown(key1))
+            if (vertical)
             {
-                velocity.Y = -newVelocity;
-            }
-            else if (inputHelper.IsKeyDown(key2))
-            {
-                velocity.Y = newVelocity;
+                if (inputHelper.IsKeyDown(key1))
+                {
+                    velocity.Y = -newVelocity;
+                }
+                else if (inputHelper.IsKeyDown(key2))
+                {
+                    velocity.Y = newVelocity;
+                }
+                else
+                {
+                    velocity.Y = 0;
+                }
             }
             else
             {
-                velocity.Y = 0;
+                if(inputHelper.IsKeyDown(key1))
+                {
+                    velocity.X = -newVelocity;
+                }
+                else if (inputHelper.IsKeyDown(key2))
+                {
+                    velocity.X = newVelocity;
+                }
+                else
+                {
+                    velocity.X = 0;
+                }
             }
-            
         }
 
         public void HandlePowerup(PowerUpType powerUp)

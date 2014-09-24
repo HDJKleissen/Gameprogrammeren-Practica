@@ -12,15 +12,18 @@ namespace Practicum1.states
 {
     class TwoPlayerState : State
     {
-        public Ball ball;
-        public Paddle player1, player2;
-        public List<Paddle> paddleList = new List<Paddle>();
-        public static List<PowerUp> powerUpList = new List<PowerUp>();
-        public PowerUp powerUp1, powerUp2;
+        protected Ball ball;
+        protected Paddle player1, player2;
+        protected List<Paddle> paddleList = new List<Paddle>();
+        protected PowerUp powerUp1, powerUp2;
+        protected bool paused;
+        protected TextObject pausedText;
+        
         public TwoPlayerState(ContentManager Content)
         {
-            player1 = new Paddle(Content.Load<Texture2D>("rodeSpeler"), Content.Load<Texture2D>("balRood"), new Vector2(0, 300), 350, Keys.W, Keys.S, "Player 1");
-            player2 = new Paddle(Content.Load<Texture2D>("blauweSpeler"), Content.Load<Texture2D>("balBlauw"), new Vector2(Practicum1.Screen.X - 16, 300), 350, Keys.Up, Keys.Down, "Player 2");
+            paused = false;
+            player1 = new Paddle(Content.Load<Texture2D>("rodeSpeler"), Content.Load<Texture2D>("balRood"), new Vector2(0, 300), 350, Keys.W, Keys.S, true, "Player 1");
+            player2 = new Paddle(Content.Load<Texture2D>("blauweSpeler"), Content.Load<Texture2D>("balBlauw"), new Vector2(Practicum1.Screen.X - 16, 300), 350, Keys.Up, Keys.Down, true, "Player 2");
             paddleList.Add(player1);
             paddleList.Add(player2);
             ball = new Ball(Content.Load<Texture2D>("bal"), new Vector2(Practicum1.Screen.X / 2, Practicum1.Screen.Y / 2), 275, paddleList, "Ball");
@@ -35,28 +38,40 @@ namespace Practicum1.states
             this.Add(powerUp2);
             powerUpList.Add(powerUp1);
             powerUpList.Add(powerUp2);
+
+            pausedText = new TextObject("Game paused.", new Vector2(Practicum1.Screen.X / 2 - 80, Practicum1.Screen.Y / 2), Color.Black, null, "Pause Text");
+            pausedText.Visible = false;
+            this.Add(pausedText);
+        }
+
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            if (inputHelper.IsKeyPressed(Keys.P))
+            {
+                paused = !paused;
+                pausedText.Visible = paused;
+            }
+            base.HandleInput(inputHelper);
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (player1.Lives <= 0)
+            if(!paused)
             {
-                Practicum1.WinPaddle = player2;
-                Practicum1.GameStateManager.Reset();
-                Practicum1.GameStateManager.SwitchTo("gameOverState");
+                if (player1.Lives <= 0)
+                {
+                    Practicum1.WinPaddle = player2;
+                    Practicum1.GameStateManager.Reset();
+                    Practicum1.GameStateManager.SwitchTo("gameOverState");
+                }
+                if (player2.Lives <= 0)
+                {
+                    Practicum1.WinPaddle = player1;
+                    Practicum1.GameStateManager.Reset();
+                    Practicum1.GameStateManager.SwitchTo("gameOverState");
+                }
+                base.Update(gameTime);
             }
-            if (player2.Lives <= 0)
-            {
-                Practicum1.WinPaddle = player1;
-                Practicum1.GameStateManager.Reset();
-                Practicum1.GameStateManager.SwitchTo("gameOverState");
-            }
-            base.Update(gameTime);
-        }
-
-        public static List<PowerUp> PowerUpList
-        {
-            get { return powerUpList; }
         }
     }
 }

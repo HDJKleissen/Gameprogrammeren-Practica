@@ -33,11 +33,7 @@ namespace Practicum1.states
                 Practicum1.WinPaddle = null;
                 Practicum1.GameStateManager.SwitchTo("mainMenuState");
             }
-            else if (inputHelper.IsKeyPressed(Keys.R))
-            {
-                Practicum1.WinPaddle = null;
-                Practicum1.GameStateManager.SwitchTo("twoPlayerState");
-            }
+            
             base.HandleInput(inputHelper);
         }
     }

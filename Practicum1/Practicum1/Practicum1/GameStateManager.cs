@@ -24,7 +24,7 @@ namespace Practicum1
             gameStates[name] = state;
         }
 
-        public State getGameState(string name)
+        public State GetGameState(string name)
         {
             return gameStates[name];
         }
@@ -35,8 +35,17 @@ namespace Practicum1
             {
                 currentGameState = gameStates[name];
                 Console.WriteLine("Switched gamestate to " + currentGameState);
-            }
-              
+            }     
+        }
+
+        public bool GetCurrentGameState(string name)
+        {
+            return gameStates[name] == currentGameState;
+        }
+
+        public State GetCurrentGameState()
+        {
+            return currentGameState;
         }
 
         public void Update(GameTime gameTime)

@@ -47,6 +47,8 @@ namespace Practicum1
             gameStateManager.AddGameState("mainMenuState", new MainMenuState());
             gameStateManager.AddGameState("gameOverState", new GameOverState());
             gameStateManager.AddGameState("twoPlayerState", new TwoPlayerState(Content));
+            gameStateManager.AddGameState("fourPlayerState", new FourPlayerState(Content));
+            gameStateManager.AddGameState("helpState", new HelpState());
             gameStateManager.SwitchTo("mainMenuState");
         }
         

@@ -11,6 +11,7 @@ namespace Practicum1.states
     public class State
     {
         protected List<GameObject> gameObjects;
+        protected List<PowerUp> powerUpList = new List<PowerUp>();
         public State()
         {
             gameObjects = new List<GameObject>();
@@ -70,6 +71,11 @@ namespace Practicum1.states
             {
                 obj.Reset();
             }
+        }
+
+        public List<PowerUp> PowerUpList
+        {
+            get { return powerUpList; }
         }
     }
 }

@@ -31,11 +31,13 @@ namespace Practicum1.gameobjects
         {
             velocity.X = (float)(speed * Math.Cos(direction));
             velocity.Y = (float)(speed * Math.Sin(direction));
-            
-            if((position.Y < 0 && velocity.Y < 0)
-                || (position.Y > Practicum1.Screen.Y-sprite.Height && velocity.Y > 0))
+
+            if (Practicum1.GameStateManager.GetCurrentGameState("twoPlayerState"))
             {
-                Bounce();
+                if ((position.Y < 0 && velocity.Y < 0) || (position.Y > Practicum1.Screen.Y - sprite.Height && velocity.Y > 0))
+                {
+                    Bounce();
+                }
             }
             foreach(Paddle paddle in paddleList)
             {
@@ -47,19 +49,45 @@ namespace Practicum1.gameobjects
                 foreach (Paddle paddle in paddleList)
                     if (paddle.Name.Equals("Player 1"))
                     {
-                        paddle.Lives = paddle.Lives - 1;
+                        paddle.Lives -= 1;
                         Reset(paddle);
                     }
-                        
-
+                    
             if (position.X > Practicum1.Screen.X)
                 foreach (Paddle paddle in paddleList)
                     if (paddle.Name.Equals("Player 2"))
                     {
-                        paddle.Lives = paddle.Lives - 1;
+                        paddle.Lives -= 1;
                         Reset(paddle);
                     }
-            foreach (PowerUp pwrUp in TwoPlayerState.PowerUpList)
+            if(Practicum1.GameStateManager.GetCurrentGameState("fourPlayerState"))
+            {
+                if(position.Y < 0 - sprite.Height)
+                {
+                    foreach(Paddle paddle in paddleList)
+                    {
+                        if(paddle.Name.Equals("Player 3"))
+                        {
+                            paddle.Lives -= 1;
+                            Reset(paddle);
+                        }
+                    }
+                }
+                if (position.Y > Practicum1.Screen.Y)
+                {
+                    foreach (Paddle paddle in paddleList)
+                    {
+                        if (paddle.Name.Equals("Player 4"))
+                        {
+                            paddle.Lives -= 1;
+                            Reset(paddle);
+                        }
+                    }
+                }
+            }
+
+            State currentState = Practicum1.GameStateManager.GetCurrentGameState();
+            foreach (PowerUp pwrUp in currentState.PowerUpList)
             {
                 if(CheckCollision(pwrUp) && pwrUp.Visible)
                 {
@@ -124,8 +152,20 @@ namespace Practicum1.gameobjects
             else if(paddle.Name.Equals("Player 2"))
             {
                 float relativeIntersectY = (paddle.Position.Y + ((paddle.Sprite.Height * paddle.SpriteScale) / 2) - position.Y);
-                float normalizedIntersectY = (relativeIntersectY / ((paddle.Sprite.Height * paddle.SpriteScale) / 2)); 
+                float normalizedIntersectY = (relativeIntersectY / (paddle.Sprite.Height * paddle.SpriteScale) / 2); 
                 direction = Math.PI - normalizedIntersectY * (-1 * Math.PI / 3);
+            }
+            else if(paddle.Name.Equals("Player 3"))
+            {
+                float relativeIntersectX = (paddle.Position.X + ((paddle.Sprite.Width * paddle.SpriteScale) / 2) - position.X);
+                float normalizedIntersectX = (relativeIntersectX / (paddle.Sprite.Width * paddle.SpriteScale) / 2);
+                direction = (0.5 * Math.PI) - normalizedIntersectX * (-1 * Math.PI / 3);
+            }
+            else if (paddle.Name.Equals("Player 4"))
+            {
+                float relativeIntersectX = (paddle.Position.X + ((paddle.Sprite.Width * paddle.SpriteScale) / 2) - position.X);
+                float normalizedIntersectX = (relativeIntersectX / (paddle.Sprite.Width * paddle.SpriteScale) / 2);
+                direction = (0.5 * Math.PI) - normalizedIntersectX * (-1 * Math.PI / 3);
             }
             lastBouncePaddle = paddle;
             speed *= 1.04;
@@ -140,6 +180,10 @@ namespace Practicum1.gameobjects
                 direction = 0.75 * Math.PI + random.NextDouble() * 0.5 * Math.PI;
             else if (paddle.Name.Equals("Player 2"))
                 direction = 0.25 * Math.PI - random.NextDouble() * 0.5 * Math.PI;
+            else if (paddle.Name.Equals("Player 3"))
+                direction = 0.5 * Math.PI + random.NextDouble() * 0.5 * Math.PI;
+            else if (paddle.Name.Equals("Player 4"))
+                direction = 1.5 * Math.PI - random.NextDouble() * 0.5 * Math.PI;
             lastBouncePaddle = null;
             speed = startSpeed;
         }
