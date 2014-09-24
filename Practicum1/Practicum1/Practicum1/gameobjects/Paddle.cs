@@ -16,6 +16,7 @@ namespace Practicum1.gameobjects
         Keys key1, key2;
         float newVelocity, baseVelocity;
         bool vertical;
+        Vector2 beginPosition;
 
         public Paddle(Texture2D sprite, Texture2D livesSprite, Vector2 position, float newVelocity, Keys key1, Keys key2, bool vertical, String name)
             : base(sprite, position, name)
@@ -23,6 +24,7 @@ namespace Practicum1.gameobjects
             this.sprite = sprite;
             this.livesSprite = livesSprite;
             this.position = position;
+            this.beginPosition = position;
             this.newVelocity = newVelocity;
             this.key1 = key1;
             this.key2 = key2;
@@ -78,11 +80,27 @@ namespace Practicum1.gameobjects
             {
                 spriteScale = 1f;
             }
-            Debug.Print("timer ended, reset stuffs");
+            if(lives <= 0)
+            {
+                visible = false;
+                this.position = new Vector2(-200, -200);
+            }
         }
         
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (sprite != null && visible)
+            {
+                if (vertical)
+                {
+                    spriteBatch.Draw(sprite, position, null, Color.White, 0, Vector2.Zero, new Vector2(1, spriteScale), SpriteEffects.None, 0);
+                }
+                else
+                {
+                    spriteBatch.Draw(sprite, position, null, Color.White, 0, Vector2.Zero, new Vector2(spriteScale, 1), SpriteEffects.None, 0);
+                }
+            }
+        
             if (name.Equals("Player 1"))
                 DrawLevens(position.X, Practicum1.Screen.Y-livesSprite.Height, spriteBatch);
             else if (name.Equals("Player 2"))
@@ -91,7 +109,6 @@ namespace Practicum1.gameobjects
                 DrawLevens(0, position.Y, spriteBatch);
             else if (name.Equals("Player 4"))
                 DrawLevens(Practicum1.Screen.X - (livesSprite.Width * lives), position.Y, spriteBatch);
-            base.Draw(gameTime, spriteBatch);
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -163,6 +180,8 @@ namespace Practicum1.gameobjects
         public override void Reset()
         {
             lives = 3;
+            position = beginPosition;
+            visible = true;
             base.Reset();
         }
         public int Lives

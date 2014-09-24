@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Practicum1.states;
 using Practicum1.gameobjects;
+using System.Diagnostics;
 
 namespace Practicum1
 {
@@ -37,7 +38,9 @@ namespace Practicum1
             gameStateManager = new GameStateManager();
             inputHelper = new InputHelper();
             timerManager = new TimerManager();
-            graphics.IsFullScreen = false;
+            graphics.PreferredBackBufferHeight = 800;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.ApplyChanges();
         }
         protected override void LoadContent()
         {
@@ -50,6 +53,7 @@ namespace Practicum1
             gameStateManager.AddGameState("fourPlayerState", new FourPlayerState(Content));
             gameStateManager.AddGameState("helpState", new HelpState());
             gameStateManager.SwitchTo("mainMenuState");
+            Debug.Print("Screen size: " + screen);
         }
         
         protected override void Update(GameTime gameTime)
